@@ -1,7 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/saurabhmittal16/pocket/core"
+)
 
 func main() {
-	fmt.Println("Hello World!")
+	node1 := core.CreateNode()
+	node1.Put("1", "A")
+	node1.Put("2", "B")
+
+	fmt.Println(node1.Get("1"))
+	fmt.Println(node1.Get("3"))
+
+	node2 := core.CreateNode()
+	fmt.Println(node2.Get("1"))
 }
