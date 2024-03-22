@@ -12,6 +12,7 @@ func main() {
 	node1.Put("2", "B")
 
 	fmt.Println(node1.Get("1"))
+	fmt.Println(node1.Get("2"))
 	fmt.Println(node1.Get("3"))
 
 	node2 := core.CreateNode()
