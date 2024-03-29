@@ -1,31 +1,32 @@
 package core
 
-import (
-	"github.com/google/uuid"
-)
-
 type key struct {
 	title string
 }
 
 type value struct {
-	value any
+	data any
 }
 
 type Node struct {
-	id    uuid.UUID
-	elems map[key]value
+	id       int
+	elements map[key]value
 }
 
-func (node Node) Get(_key string) any {
-	val := node.elems[key{_key}]
-	return val.value
+func (node Node) Get(keyLabel string) any {
+	k := key{keyLabel}
+	element := node.elements[k]
+	v := element.data
+	return v
 }
-func (node Node) Put(_key string, _value any) {
-	node.elems[key{_key}] = value{value: _value}
+func (node Node) Put(keyLabel string, data any) {
+	k := key{keyLabel}
+	v := value{data}
+
+	node.elements[k] = v
 }
 
-func CreateNode() *Node {
-	node := Node{uuid.New(), map[key]value{}}
+func CreateNode(id int) *Node {
+	node := Node{id, map[key]value{}}
 	return &node
 }
