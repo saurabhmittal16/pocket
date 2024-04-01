@@ -1,1 +1,14 @@
 syntax = "proto3";
+option go_package = "pocket/service";
+
+service Controller {
+    rpc StartWorkers (WorkerRequest) returns (WorkerReply) {}
+}
+
+message WorkerRequest {
+    int32 numWorkers = 1;
+}
+
+message WorkerReply {
+    string message = 1;
+}
