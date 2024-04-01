@@ -1,4 +1,4 @@
-package core
+package server
 
 import (
 	"fmt"
@@ -15,7 +15,7 @@ func GetAvailablePort() (int, error) {
 		listener, err := net.Listen("tcp", address)
 		if err == nil {
 			listener.Close()
-			log.Printf("Found a port: %d", port)
+			log.Printf("found a port: %d", port)
 			return port, nil
 		}
 	}
