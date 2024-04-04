@@ -56,14 +56,18 @@ func startWorkerAndDetach() {
 		log.Fatal("cmd.Start failed: ", err)
 	}
 
-	pid := cmd.Process.Pid
-	log.Printf("Started the worker node at PID: %d\n", pid)
-
-	writePIDFile(pid)
-	_, err = cmd.Process.Wait()
+	log.Printf("Started the worker node at PID: %d\n", cmd.Process.Pid)
+	err = cmd.Process.Release()
 	if err != nil {
 		log.Fatal("cmd.Process.Release failed: ", err)
 	}
+	log.Printf("Started the worker node at PID: %d\n", cmd.Process.Pid)
+
+	// writePIDFile(pid)
+	// _, err = cmd.Process.Wait()
+	// if err != nil {
+	// 	log.Fatal("cmd.Process.Release failed: ", err)
+	// }
 }
 
 func stopWorker() {
