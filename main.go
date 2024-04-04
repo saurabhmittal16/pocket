@@ -4,9 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
 	"os/exec"
-	"strconv"
 )
 
 const WORKER_PID_PATH string = "./.pocket/worker.pid"
@@ -20,33 +18,6 @@ func init() {
 	flag.Parse()
 }
 
-func writePIDFile(pid int) {
-	pidString := fmt.Sprintf("%v", pid)
-	file, err := os.Create(WORKER_PID_PATH)
-	if err != nil {
-		log.Fatal("Failed to create pid file: ", err)
-	}
-	defer file.Close()
-
-	_, err = file.WriteString(pidString)
-	if err != nil {
-		log.Fatal("Failed to create pid file: ", err)
-	}
-}
-
-func readPIDFile() int {
-	data, err := os.ReadFile(WORKER_PID_PATH)
-	if err != nil {
-		log.Fatal("Failed to read pid file: ", err)
-	}
-	pidString := string(data)
-	pid, err := strconv.Atoi(pidString)
-	if err != nil {
-		log.Fatal("Failed to read pid file: ", err)
-	}
-	return pid
-}
-
 func startWorkerAndDetach() {
 	cmd := exec.Command("go", "run", "./server/controller")
 	log.Printf("Running worker node and detaching!")
@@ -56,27 +27,19 @@ func startWorkerAndDetach() {
 		log.Fatal("cmd.Start failed: ", err)
 	}
 
-	log.Printf("Started the worker node at PID: %d\n", cmd.Process.Pid)
 	err = cmd.Process.Release()
 	if err != nil {
 		log.Fatal("cmd.Process.Release failed: ", err)
 	}
-	log.Printf("Started the worker node at PID: %d\n", cmd.Process.Pid)
-
-	// writePIDFile(pid)
-	// _, err = cmd.Process.Wait()
-	// if err != nil {
-	// 	log.Fatal("cmd.Process.Release failed: ", err)
-	// }
 }
 
 func stopWorker() {
-	pid := readPIDFile()
-	proc, err := os.FindProcess(int(pid))
+	log.Printf("Stopping worker node!")
+	cmd := exec.Command("fuser", "-k", "3000/tcp")
+	err := cmd.Run()
 	if err != nil {
-		log.Fatal("Failed to kill worker: ", err)
+		log.Fatal("Stop server failed: ", err)
 	}
-	proc.Kill()
 }
 
 func main() {
