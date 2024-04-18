@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os/exec"
 	"time"
@@ -11,9 +12,12 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
+var PORT int = 3000
+var ADDR string = fmt.Sprintf(":%d", PORT)
+
 func setup() (*grpc.ClientConn, service.ControllerClient, context.Context, context.CancelFunc) {
 	// Set up a connection to the server.
-	conn, err := grpc.NewClient("localhost:3000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(ADDR, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Could not connect to Controller: %v", err)
 	}
@@ -41,7 +45,7 @@ func SpinNodes(count int32) {
 }
 
 func Start() {
-	cmd := exec.Command("go", "run", "../server/controller")
+	cmd := exec.Command("go", "run", "./controller/server")
 	log.Printf("Running worker node and detaching!")
 	err := cmd.Start()
 

@@ -24,6 +24,6 @@ func main() {
 	// } else if stop {
 	// 	client.Stop()
 	// }
-	// client.Start()
-	client.SpinNodes(3)
+	client.Start()
+	// client.SpinNodes(3)
 }
