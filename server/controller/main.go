@@ -1,11 +1,12 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
 
-	pb "github.com/saurabhmittal16/pocket/service"
+	"github.com/saurabhmittal16/pocket/service"
 	"google.golang.org/grpc"
 )
 
@@ -13,7 +14,7 @@ var PORT int = 3000
 var ADDR string = fmt.Sprintf(":%d", PORT)
 
 type server struct {
-	pb.UnimplementedControllerServer
+	service.UnimplementedControllerServer
 }
 
 func main() {
@@ -24,7 +25,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	pb.RegisterControllerServer(s, &server{})
+	service.RegisterControllerServer(s, &server{})
 	log.Printf("controller server listening at: %v", lis.Addr())
 
 	if err := s.Serve(lis); err != nil {
@@ -32,7 +33,8 @@ func main() {
 	}
 }
 
-// func CheckControlNodeRunning() bool {
-// 	_, err := net.Listen("tcp", ADDR)
-// 	return err != nil
-// }
+func (s *server) StartWorkers(ctx context.Context, in *service.WorkerRequest) (*service.WorkerReply, error) {
+	log.Printf("Received: %v", in.GetNumWorkers())
+	message := fmt.Sprintf("Spinning up %d workers", in.GetNumWorkers())
+	return &service.WorkerReply{Message: message}, nil
+}

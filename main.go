@@ -19,9 +19,11 @@ func init() {
 func main() {
 	fmt.Print("Welcome to Pocket!\n")
 
-	if start {
-		client.Start()
-	} else if stop {
-		client.Stop()
-	}
+	// if start {
+	// 	client.Start()
+	// } else if stop {
+	// 	client.Stop()
+	// }
+	// client.Start()
+	client.SpinNodes(3)
 }
