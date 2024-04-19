@@ -13,10 +13,11 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-var PORT int = 3000
+const PORT int = 3000
+
 var ADDR string = fmt.Sprintf(":%d", PORT)
 var conn *grpc.ClientConn
-var client service.ControllerClient
+var rpcClient service.ControllerClient
 var ctx context.Context
 var cancel context.CancelFunc
 
@@ -27,7 +28,7 @@ func setup() {
 	if err != nil {
 		log.Fatalf("Could not connect to Controller: %v", err)
 	}
-	client = service.NewControllerClient(conn)
+	rpcClient = service.NewControllerClient(conn)
 
 	// Contact the server and print out its response.
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
@@ -39,8 +40,12 @@ func teardown() {
 }
 
 func SpinNodes(count int32) {
+	if GetControllerStatus() == INACTIVE {
+		log.Fatal("Controller node is down")
+	}
+
 	setup()
-	r, err := client.StartWorkers(ctx, &service.WorkerRequest{NumWorkers: count})
+	r, err := rpcClient.StartWorkers(ctx, &service.WorkerRequest{NumWorkers: count})
 	if err != nil {
 		log.Fatalf("Could not spin up nodes: %v", err)
 	}
@@ -68,6 +73,15 @@ func Start() {
 	err = cmd.Process.Release()
 	if err != nil {
 		log.Fatal("cmd.Process.Release failed: ", err)
+	}
+}
+
+func CheckStatus() {
+	status := GetControllerStatus()
+	if status == ACTIVE {
+		log.Print("Controller node is up!")
+	} else {
+		log.Print("Controller node is down!")
 	}
 }
 

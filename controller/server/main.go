@@ -21,20 +21,20 @@ func main() {
 	// create tcp listener at PORT
 	lis, err := net.Listen("tcp", ADDR)
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatalf("[ERROR] failed to listen: %v", err)
 	}
 
 	s := grpc.NewServer()
 	service.RegisterControllerServer(s, &server{})
-	log.Printf("controller server listening at: %v", lis.Addr())
+	log.Printf("[LOG] controller server listening at: %v", lis.Addr())
 
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Fatalf("[ERROR] failed to serve: %v", err)
 	}
 }
 
 func (s *server) StartWorkers(ctx context.Context, in *service.WorkerRequest) (*service.WorkerReply, error) {
-	log.Printf("Received: %v", in.GetNumWorkers())
+	log.Printf("[CALL] StartWorkers")
 	message := fmt.Sprintf("Spinning up %d workers", in.GetNumWorkers())
 	return &service.WorkerReply{Message: message}, nil
 }
