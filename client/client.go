@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"time"
 
@@ -14,40 +15,51 @@ import (
 
 var PORT int = 3000
 var ADDR string = fmt.Sprintf(":%d", PORT)
+var conn *grpc.ClientConn
+var client service.ControllerClient
+var ctx context.Context
+var cancel context.CancelFunc
 
-func setup() (*grpc.ClientConn, service.ControllerClient, context.Context, context.CancelFunc) {
+func setup() {
 	// Set up a connection to the server.
-	conn, err := grpc.NewClient(ADDR, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	var err error
+	conn, err = grpc.NewClient(ADDR, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Could not connect to Controller: %v", err)
 	}
-	client := service.NewControllerClient(conn)
+	client = service.NewControllerClient(conn)
 
 	// Contact the server and print out its response.
-	context, cancel := context.WithTimeout(context.Background(), time.Second)
-
-	return conn, client, context, cancel
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
 }
 
-func teardown(conn *grpc.ClientConn, cancel context.CancelFunc) {
+func teardown() {
 	conn.Close()
 	cancel()
 }
 
 func SpinNodes(count int32) {
-	conn, client, context, cancel := setup()
-	r, err := client.StartWorkers(context, &service.WorkerRequest{NumWorkers: count})
+	setup()
+	r, err := client.StartWorkers(ctx, &service.WorkerRequest{NumWorkers: count})
 	if err != nil {
 		log.Fatalf("Could not spin up nodes: %v", err)
 	}
 	log.Printf("Response: %s", r.GetMessage())
-	teardown(conn, cancel)
+	teardown()
 }
 
 func Start() {
+	f, err := os.OpenFile("./logs/controller", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal("Unable to open log file")
+	}
+
 	cmd := exec.Command("go", "run", "./controller/server")
+	cmd.Stderr = f
+	cmd.Stdout = f
+
 	log.Printf("Running worker node and detaching!")
-	err := cmd.Start()
+	err = cmd.Start()
 
 	if err != nil {
 		log.Fatal("cmd.Start failed: ", err)
