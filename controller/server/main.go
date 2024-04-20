@@ -43,10 +43,8 @@ func (s *server) StartWorkers(ctx context.Context, in *service.WorkerRequest) (*
 	c := controller.GetInstance()
 
 	// execute method
-	err := c.CreateWorkers(int(numWorkers))
-	if err != nil {
-		return &service.WorkerReply{Message: "Error spinning up nodes"}, err
-	}
+	// create worker nodes async, can't hold the RPC response till worker servers spin up
+	go c.CreateWorkers(int(numWorkers))
 
 	message := fmt.Sprintf("Spinning up %d workers", in.GetNumWorkers())
 	return &service.WorkerReply{Message: message}, nil

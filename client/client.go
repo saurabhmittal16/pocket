@@ -41,7 +41,8 @@ func teardown() {
 
 func SpinNodes(count int32) {
 	if GetControllerStatus() == INACTIVE {
-		log.Fatal("Controller node is down")
+		log.Print("Controller node is down")
+		return
 	}
 
 	setup()

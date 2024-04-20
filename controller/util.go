@@ -2,7 +2,6 @@ package controller
 
 import (
 	"fmt"
-	"log"
 	"net"
 )
 
@@ -15,7 +14,6 @@ func GetAvailablePort() (int, error) {
 		listener, err := net.Listen("tcp", address)
 		if err == nil {
 			listener.Close()
-			log.Printf("found a port: %d", port)
 			return port, nil
 		}
 	}
