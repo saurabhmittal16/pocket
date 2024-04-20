@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/saurabhmittal16/pocket/controller"
 	"github.com/saurabhmittal16/pocket/service"
 	"google.golang.org/grpc"
 )
@@ -35,6 +36,18 @@ func main() {
 
 func (s *server) StartWorkers(ctx context.Context, in *service.WorkerRequest) (*service.WorkerReply, error) {
 	log.Printf("[CALL] StartWorkers")
+	// parse args
+	numWorkers := in.NumWorkers
+
+	// get the controller instance
+	c := controller.GetInstance()
+
+	// execute method
+	err := c.CreateWorkers(int(numWorkers))
+	if err != nil {
+		return &service.WorkerReply{Message: "Error spinning up nodes"}, err
+	}
+
 	message := fmt.Sprintf("Spinning up %d workers", in.GetNumWorkers())
 	return &service.WorkerReply{Message: message}, nil
 }
