@@ -32,12 +32,14 @@ func GetInstance() *controllerNode {
 
 func (c *controllerNode) CreateWorkers(numWorkers int) error {
 	count := len(c.workers)
+	ports, err := GetAvailablePorts(numWorkers)
+
+	if err != nil {
+		return err
+	}
+
 	for i := 0; i < numWorkers; i++ {
-		// TODO: Fix concurrency issue
-		port, err := GetAvailablePort()
-		if err != nil {
-			log.Fatal("Unable to spin up worker nodes")
-		}
+		port := ports[i]
 
 		// create workerNode instance
 		id := count + i

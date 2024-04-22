@@ -28,3 +28,13 @@ signal: killed
 2024/04/21 02:12:44 Successfuly started worker node (Id = 1) at 8000
 2024/04/21 02:12:44 Successfuly started worker node (Id = 2) at 8000
 signal: killed
+2024/04/23 01:44:36 [LOG] controller server listening at: [::]:3000
+2024/04/23 01:44:45 [CALL] StartWorkers
+2024/04/23 01:44:45 Successfuly started worker node (Id = 0) at 8000
+2024/04/23 01:44:45 Successfuly started worker node (Id = 1) at 8001
+2024/04/23 01:44:45 Successfuly started worker node (Id = 2) at 8002
+2024/04/23 01:44:57 [CALL] StartWorkers
+2024/04/23 01:44:57 Successfuly started worker node (Id = 3) at 8003
+2024/04/23 01:44:57 Successfuly started worker node (Id = 4) at 8004
+2024/04/23 01:44:57 Successfuly started worker node (Id = 5) at 8005
+signal: terminated
