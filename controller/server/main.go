@@ -14,11 +14,18 @@ import (
 var PORT int = 3000
 var ADDR string = fmt.Sprintf(":%d", PORT)
 
+var BALANCER_PORT int = 3001
+
 type server struct {
 	service.UnimplementedControllerServer
 }
 
 func main() {
+	// spin up the load balancer server
+	// TODO: Get error from SpinBalancer and log accordingly
+	go controller.SpinBalancer(BALANCER_PORT)
+	log.Printf("[LOG] controller REST server listening at: %v", BALANCER_PORT)
+
 	// create tcp listener at PORT
 	lis, err := net.Listen("tcp", ADDR)
 	if err != nil {
@@ -27,7 +34,7 @@ func main() {
 
 	s := grpc.NewServer()
 	service.RegisterControllerServer(s, &server{})
-	log.Printf("[LOG] controller server listening at: %v", lis.Addr())
+	log.Printf("[LOG] controller RPC server listening at: %v", lis.Addr())
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("[ERROR] failed to serve: %v", err)
@@ -35,7 +42,7 @@ func main() {
 }
 
 func (s *server) StartWorkers(ctx context.Context, in *service.WorkerRequest) (*service.WorkerReply, error) {
-	log.Printf("[CALL] StartWorkers")
+	log.Printf("[RPC] StartWorkers")
 	// parse args
 	numWorkers := in.NumWorkers
 

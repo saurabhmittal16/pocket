@@ -55,7 +55,7 @@ func (c *controllerNode) CreateWorkers(numWorkers int) error {
 		w := workerNode{Id: id, Port: port, Hash: hash(id)}
 
 		// spin up REST server for worker node
-		go worker.SpinWorker(port)
+		go worker.SpinWorker(port, id)
 
 		// save the workerNode instance
 		c.addToRing(w)
@@ -73,8 +73,25 @@ func (c *controllerNode) addToRing(w workerNode) {
 	})
 }
 
-func (c *controllerNode) GetRing() []workerNode {
-	return c.ring
+func (c *controllerNode) FindWorker(key string) (workerNode, error) {
+	if len(c.ring) == 0 {
+		return workerNode{}, fmt.Errorf("no worker nodes running")
+	}
+
+	// get hash value for cache key
+	h := hash(key)
+
+	// binary search the space
+	i := sort.Search(len(c.ring), func(i int) bool {
+		return c.ring[i].Hash > h
+	})
+
+	// Check if the key was actually found (might be at the end)
+	if i < len(c.ring) && c.ring[i].Hash > h {
+		return c.ring[i], nil // Index of struct with score greater than target
+	}
+	// input hash is greater than all elements, return first index
+	return c.ring[0], nil
 }
 
 func hash(key string) uint64 {
