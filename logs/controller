@@ -13,3 +13,71 @@
 2024/04/25 00:30:31 [REST] GET: sdisds
 2024/04/25 00:30:31 [REST] Redirect to Worker#00003 (:8002)
 signal: killed
+2024/04/25 00:35:59 [LOG] controller REST server listening at: 3001
+2024/04/25 00:35:59 [LOG] controller RPC server listening at: [::]:3000
+2024/04/25 00:36:03 [RPC] StartWorkers
+2024/04/25 00:36:03 Successfuly started worker node (Id = Worker#00001) at 8000
+2024/04/25 00:36:03 Successfuly started worker node (Id = Worker#00002) at 8001
+2024/04/25 00:36:03 Successfuly started worker node (Id = Worker#00003) at 8002
+2024/04/25 00:36:14 [REST] GET: sdisds
+2024/04/25 00:36:14 [REST] Redirect to Worker#00003 (:8002)
+signal: killed
+2024/04/25 00:36:57 [LOG] controller REST server listening at: 3001
+2024/04/25 00:36:57 [LOG] controller RPC server listening at: [::]:3000
+2024/04/25 00:37:01 [RPC] StartWorkers
+2024/04/25 00:37:01 Successfuly started worker node (Id = Worker#00001) at 8000
+2024/04/25 00:37:01 Successfuly started worker node (Id = Worker#00002) at 8001
+2024/04/25 00:37:01 Successfuly started worker node (Id = Worker#00003) at 8002
+2024/04/25 00:37:08 [REST] GET: sdisds
+2024/04/25 00:37:08 [REST] Redirect to Worker#00003 (:8002)
+2024/04/25 00:37:13 [REST] GET: sdisds
+2024/04/25 00:37:13 [REST] Redirect to Worker#00003 (:8002)
+2024/04/25 00:37:26 [REST] GET: sdisds
+2024/04/25 00:37:26 [REST] Redirect to Worker#00003 (:8002)
+2024/04/25 00:37:39 [REST] GET: sdisds
+2024/04/25 00:37:39 [REST] Redirect to Worker#00003 (:8002)
+signal: killed
+2024/04/25 00:38:54 [LOG] controller REST server listening at: 3001
+2024/04/25 00:38:54 [LOG] controller RPC server listening at: [::]:3000
+2024/04/25 00:38:55 [RPC] StartWorkers
+2024/04/25 00:38:55 Successfuly started worker node (Id = Worker#00001) at 8000
+2024/04/25 00:38:55 Successfuly started worker node (Id = Worker#00002) at 8001
+2024/04/25 00:38:55 Successfuly started worker node (Id = Worker#00003) at 8002
+2024/04/25 00:39:03 [REST] GET: sdisds
+2024/04/25 00:39:03 [REST] Redirect to Worker#00003 (:8002)
+signal: killed
+2024/04/25 00:39:41 [LOG] controller REST server listening at: 3001
+2024/04/25 00:39:41 [LOG] controller RPC server listening at: [::]:3000
+2024/04/25 00:39:43 [RPC] StartWorkers
+2024/04/25 00:39:43 Successfuly started worker node (Id = Worker#00001) at 8000
+2024/04/25 00:39:43 Successfuly started worker node (Id = Worker#00002) at 8001
+2024/04/25 00:39:43 Successfuly started worker node (Id = Worker#00003) at 8002
+2024/04/25 00:39:50 [REST] GET: sdisds
+2024/04/25 00:39:50 [REST] Redirect to Worker#00003 (:8002)
+signal: killed
+2024/04/25 00:42:18 [LOG] controller REST server listening at: 3001
+2024/04/25 00:42:18 [LOG] controller RPC server listening at: [::]:3000
+2024/04/25 00:42:20 [RPC] StartWorkers
+2024/04/25 00:42:20 Successfuly started worker node (Id = Worker#00001) at 8000
+2024/04/25 00:42:20 Successfuly started worker node (Id = Worker#00002) at 8001
+2024/04/25 00:42:20 Successfuly started worker node (Id = Worker#00003) at 8002
+2024/04/25 00:42:32 [REST] GET: sdisds
+2024/04/25 00:42:32 [REST] Redirect to Worker#00003 (:8002)
+2024/04/25 00:43:13 [Worker#00003] Landing request
+2024/04/25 00:44:07 [Worker#00003] Landing request
+signal: killed
+2024/04/25 00:44:20 [LOG] controller REST server listening at: 3001
+2024/04/25 00:44:20 [LOG] controller RPC server listening at: [::]:3000
+2024/04/25 00:44:22 [RPC] StartWorkers
+2024/04/25 00:44:22 Successfuly started worker node (Id = Worker#00001) at 8000
+2024/04/25 00:44:22 Successfuly started worker node (Id = Worker#00002) at 8001
+2024/04/25 00:44:22 Successfuly started worker node (Id = Worker#00003) at 8002
+2024/04/25 00:44:31 [REST] GET: sdisds
+2024/04/25 00:44:31 [REST] Redirect to Worker#00003 (:8002)
+2024/04/25 00:44:31 [Worker#00003] Landing request
+2024/04/25 00:44:45 [REST] GET: sdisds
+2024/04/25 00:44:45 [REST] Redirect to Worker#00003 (:8002)
+2024/04/25 00:44:45 [Worker#00003] Landing request
+2024/04/25 00:44:57 [REST] GET: asdajdjsadna
+2024/04/25 00:44:57 [REST] Redirect to Worker#00002 (:8001)
+2024/04/25 00:44:57 [Worker#00002] Landing request

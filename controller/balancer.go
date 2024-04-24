@@ -34,13 +34,10 @@ func getValue(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Print(err.Error())
+		w.Write([]byte("Something went wrong!"))
 	} else {
 		log.Printf("[REST] Redirect to %s (:%d)", workerNode.Id, workerNode.Port)
-	}
-
-	if len(key) == 0 {
-		w.Write([]byte("No key found!"))
-	} else {
-		w.Write([]byte(fmt.Sprintf("GET %s", key)))
+		workerAddr := fmt.Sprintf("http://localhost:%d", workerNode.Port)
+		http.Redirect(w, r, workerAddr, http.StatusSeeOther)
 	}
 }
