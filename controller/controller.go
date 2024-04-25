@@ -28,7 +28,7 @@ type controllerNode struct {
 
 var instance *controllerNode
 
-func GetInstance() *controllerNode {
+func GetControllerInstance() *controllerNode {
 	if instance == nil {
 		lock.Lock()
 		defer lock.Unlock()

@@ -47,7 +47,7 @@ func (s *server) StartWorkers(ctx context.Context, in *service.WorkerRequest) (*
 	numWorkers := in.NumWorkers
 
 	// get the controller instance
-	c := controller.GetInstance()
+	c := controller.GetControllerInstance()
 
 	// execute method
 	// create worker nodes async, can't hold the RPC response till worker servers spin up

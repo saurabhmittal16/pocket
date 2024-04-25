@@ -10,17 +10,17 @@ func assert(expected, actual any) string {
 }
 
 func TestGetAndPut(t *testing.T) {
-	node := CreateStore(1)
-	node.Put("a", 1)
-	node.Put("b", 2)
+	node := CreateStore("key1")
+	node.Put("a", "1")
+	node.Put("b", "2")
 
 	val := node.Get("a")
-	if val != 1 {
+	if val != "1" {
 		t.Fatal("Node GET returns incorrect value. " + assert(1, val))
 	}
 
 	val = node.Get("x")
-	if val != nil {
+	if len(val) > 0 {
 		t.Fatal("Node GET returns incorrect value. " + assert(nil, val))
 	}
 }
