@@ -10,3 +10,4 @@
 2024/04/26 01:01:10 [REST][LB] GET: name
 2024/04/26 01:01:10 [REST][LB] Redirect to Worker#00002 (:8001)
 2024/04/26 01:01:10 [REST][Worker#00002] GET: 
+signal: killed

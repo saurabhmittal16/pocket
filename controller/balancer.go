@@ -43,7 +43,15 @@ func getValue(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	redirect(w, r, key)
+	workerNode, err := getWorkerNode(key)
+	if err != nil {
+		writeError(err, w)
+	}
+
+	// redirect request to worker addr
+	log.Printf("[REST][LB] Redirect to %s (:%d)", workerNode.Id, workerNode.Port)
+	workerAddr := fmt.Sprintf("http://localhost:%d", workerNode.Port)
+	http.Redirect(w, r, workerAddr, http.StatusSeeOther)
 }
 
 func postValue(w http.ResponseWriter, r *http.Request) {
@@ -54,25 +62,29 @@ func postValue(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("[REST][LB] POST: %v, %v", key, val)
 
-	redirect(w, r, key)
-}
-
-func redirect(w http.ResponseWriter, r *http.Request, key string) {
-	// get controller for redirecting
-	c := GetControllerInstance()
-
-	// get worker node as per key
-	workerNode, err := c.FindWorker(key)
-
+	workerNode, err := getWorkerNode(key)
 	if err != nil {
-		log.Print(err.Error())
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("Something went wrong!"))
-		return
+		writeError(err, w)
 	}
 
 	// redirect request to worker addr
 	log.Printf("[REST][LB] Redirect to %s (:%d)", workerNode.Id, workerNode.Port)
 	workerAddr := fmt.Sprintf("http://localhost:%d", workerNode.Port)
 	http.Redirect(w, r, workerAddr, http.StatusSeeOther)
+}
+
+func getWorkerNode(key string) (workerNode, error) {
+	// get controller for redirecting
+	c := GetControllerInstance()
+
+	// get worker node as per key
+	workerNode, err := c.FindWorker(key)
+
+	return workerNode, err
+}
+
+func writeError(err error, w http.ResponseWriter) {
+	log.Print(err.Error())
+	w.WriteHeader(http.StatusInternalServerError)
+	w.Write([]byte("Something went wrong!"))
 }
