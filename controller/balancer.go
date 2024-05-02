@@ -20,6 +20,7 @@ func SpinBalancer(port int) error {
 
 	// landing route
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("[REST][LB] Landing")
 		w.Write([]byte("Hello from Controller"))
 	})
 
@@ -48,10 +49,17 @@ func getValue(w http.ResponseWriter, r *http.Request) {
 		writeError(err, w)
 	}
 
-	// redirect request to worker addr
-	log.Printf("[REST][LB] Redirect to %s (:%d)", workerNode.Id, workerNode.Port)
 	workerAddr := fmt.Sprintf("http://localhost:%d", workerNode.Port)
-	http.Redirect(w, r, workerAddr, http.StatusSeeOther)
+	log.Printf("[REST][LB] Send request to %s (%s)", workerNode.Id, workerAddr)
+
+	// get response from worker
+	body, err := GetValue(workerAddr, key)
+	if err != nil {
+		writeError(err, w)
+	}
+
+	// respond
+	w.Write(body)
 }
 
 func postValue(w http.ResponseWriter, r *http.Request) {
@@ -59,7 +67,6 @@ func postValue(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&requestObj)
 	key := requestObj.Key
 	val := requestObj.Value
-
 	log.Printf("[REST][LB] POST: %v, %v", key, val)
 
 	workerNode, err := getWorkerNode(key)
@@ -68,9 +75,17 @@ func postValue(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// redirect request to worker addr
-	log.Printf("[REST][LB] Redirect to %s (:%d)", workerNode.Id, workerNode.Port)
+	log.Printf("[REST][LB] Send request to %s (%d)", workerNode.Id, workerNode.Port)
 	workerAddr := fmt.Sprintf("http://localhost:%d", workerNode.Port)
-	http.Redirect(w, r, workerAddr, http.StatusSeeOther)
+
+	// get reponse from worker
+	body, err := PostValue(workerAddr, key, val)
+	if err != nil {
+		writeError(err, w)
+	}
+
+	// respond
+	w.Write(body)
 }
 
 func getWorkerNode(key string) (workerNode, error) {
@@ -84,7 +99,8 @@ func getWorkerNode(key string) (workerNode, error) {
 }
 
 func writeError(err error, w http.ResponseWriter) {
-	log.Print(err.Error())
+	log.Printf("[REST][LB] Error: %v", err.Error())
+
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write([]byte("Something went wrong!"))
 }

@@ -34,7 +34,7 @@ func SpinWorker(port int, id string) error {
 func getValue(w http.ResponseWriter, r *http.Request) {
 	// key will be non-null since request was redirected as per key
 	key := r.URL.Query().Get("key")
-	log.Printf("[REST][%s] GET: %v", workerId, key)
+	log.Printf("[%s] GET: %v", workerId, key)
 
 	// read value from store
 	val := store.Get(key)
@@ -49,7 +49,7 @@ func postValue(w http.ResponseWriter, r *http.Request) {
 	key := requestObj.Key
 	val := requestObj.Value
 
-	log.Printf("[REST][%s] POST: %v, %v", workerId, key, val)
+	log.Printf("[%s] POST: %v, %v", workerId, key, val)
 
 	// put value to store
 	store.Put(key, val)

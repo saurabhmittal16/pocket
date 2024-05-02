@@ -1,9 +1,0 @@
-# POST http://localhost:3001/cache
-# Content-Type: application/json
-
-# {
-#     "key": "name",
-#     "value": "saurabh"
-# }
-
-GET http://localhost:3001/cache?key=name
