@@ -1,39 +1,9 @@
-2024/05/02 23:16:37 [LOG] controller REST server listening at: 3001
-2024/05/02 23:16:37 [LOG] controller RPC server listening at: [::]:3000
-2024/05/02 23:16:40 [RPC] StartWorkers
-2024/05/02 23:16:40 Successfuly started worker node (Id = Worker#00001) at 8000
-2024/05/02 23:16:40 Successfuly started worker node (Id = Worker#00002) at 8001
-2024/05/02 23:16:40 Successfuly started worker node (Id = Worker#00003) at 8002
-2024/05/02 23:16:45 [REST][LB] Landing
-2024/05/02 23:16:50 [REST][LB] POST: name, saurabh
-2024/05/02 23:16:50 [REST][LB] Send request to Worker#00002 (:8001)
-2024/05/02 23:16:50 [REST][LB] Error: EOF
-signal: killed
-2024/05/02 23:18:07 [LOG] controller REST server listening at: 3001
-2024/05/02 23:18:07 [LOG] controller RPC server listening at: [::]:3000
-signal: killed
-2024/05/02 23:18:17 [LOG] controller REST server listening at: 3001
-2024/05/02 23:18:17 [LOG] controller RPC server listening at: [::]:3000
-2024/05/02 23:18:20 [RPC] StartWorkers
-2024/05/02 23:18:20 Successfuly started worker node (Id = Worker#00001) at 8000
-2024/05/02 23:18:20 Successfuly started worker node (Id = Worker#00002) at 8001
-2024/05/02 23:18:20 Successfuly started worker node (Id = Worker#00003) at 8002
-2024/05/02 23:18:26 [REST][LB] POST: name, saurabh
-2024/05/02 23:18:26 [REST][LB] Send request to Worker#00002 (:8001)
-2024/05/02 23:18:26 [Worker#00003] POST: , 
-signal: killed
-2024/05/02 23:21:11 [LOG] controller REST server listening at: 3001
-2024/05/02 23:21:11 [LOG] controller RPC server listening at: [::]:3000
-2024/05/02 23:21:13 [RPC] StartWorkers
-2024/05/02 23:21:13 Successfuly started worker node (Id = Worker#00001) at 8000
-2024/05/02 23:21:13 Successfuly started worker node (Id = Worker#00002) at 8001
-2024/05/02 23:21:13 Successfuly started worker node (Id = Worker#00003) at 8002
-2024/05/02 23:21:16 [REST][LB] POST: name, saurabh
-2024/05/02 23:21:16 [REST][LB] Send request to Worker#00002 (:8001)
-2024/05/02 23:21:16 [Worker#00002] POST: name, saurabh
-2024/05/02 23:22:46 [REST][LB] GET: age
-2024/05/02 23:22:46 [REST][LB] Send request to Worker#00002 (:http://localhost:8001)
-2024/05/02 23:22:46 [Worker#00002] GET: age
-2024/05/02 23:22:51 [REST][LB] GET: name
-2024/05/02 23:22:51 [REST][LB] Send request to Worker#00002 (:http://localhost:8001)
-2024/05/02 23:22:51 [Worker#00002] GET: name
+2024/05/04 02:19:34 [REST][LB] POST: name, mittal
+2024/05/04 02:19:34 [REST][LB] Send request to Worker#00002 (8001)
+2024/05/04 02:19:34 [REST][LB] POST: name, saurabh
+2024/05/04 02:19:34 [REST][LB] Send request to Worker#00002 (8001)
+2024/05/04 02:19:34 [Worker#00002] POST: name, mittal
+2024/05/04 02:19:34 [Worker#00002] POST: name, saurabh
+2024/05/04 02:19:36 [REST][LB] GET: name
+2024/05/04 02:19:36 [REST][LB] Send request to Worker#00002 (http://localhost:8001)
+2024/05/04 02:19:36 [Worker#00002] GET: name
